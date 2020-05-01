@@ -58,6 +58,19 @@
     cursor: pointer;
 }
 
+.adding__warning {
+    color: rgba(174, 0, 0, 0.7);
+    position: absolute;
+    top: -50px;
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+}
+
+.adding__warning_hidden {
+    visibility: hidden;
+}
+
 @media (max-width: 500px) {
     .adding {
         margin-top: 50px;

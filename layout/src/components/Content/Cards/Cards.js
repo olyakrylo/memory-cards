@@ -5,6 +5,7 @@ import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import Item from './Item';
 import slide from './slide';
+import Confirm from './Confirm';
 
 export default class Cards extends React.Component {
     state = {
@@ -19,13 +20,22 @@ export default class Cards extends React.Component {
 
     deleteCard = (e, num) => {
         e.stopPropagation();
-        let newCards = this.state.cards.filter((el, i) => i !== Number(num));
-        let newCurr = this.state.currentIndex ? this.state.currentIndex - 1 : 0;
-        this.setState({
-            cards: newCards,
-            currentIndex: newCurr
-        });
-        localStorage.setItem('items', JSON.stringify(newCards));
+        let confirm = document.querySelector('.cards__confirm');
+        confirm.classList.remove('confirm_hidden');
+        let handler = e => {
+            if (e.target.tagName !== 'BUTTON') return;
+            confirm.removeEventListener('click', handler);
+            confirm.classList.add('confirm_hidden');
+            if (e.target.dataset.del === 'no') return;
+            let newCards = this.state.cards.filter((el, i) => i !== Number(num));
+            let newCurr = this.state.currentIndex ? this.state.currentIndex - 1 : 0;
+            this.setState({
+                cards: newCards,
+                currentIndex: newCurr
+            });
+            localStorage.setItem('items', JSON.stringify(newCards));
+        }
+        confirm.addEventListener('click', handler);
     }
 
     *genCards() {
@@ -51,11 +61,20 @@ export default class Cards extends React.Component {
     }
 
     clear = () => {
-        localStorage.removeItem('items');
-        this.setState({
-            cards: [],
-            currentIndex: 0
-        });
+        let confirm = document.querySelector('.cards__confirm');
+        confirm.classList.remove('confirm_hidden');
+        let handler = e => {
+            if (e.target.tagName !== 'BUTTON') return;
+            confirm.removeEventListener('click', handler);
+            confirm.classList.add('confirm_hidden');
+            if (e.target.dataset.del === 'no') return;
+            localStorage.removeItem('items');
+            this.setState({
+                cards: [],
+                currentIndex: 0
+            });
+        }
+        confirm.addEventListener('click', handler);
     }
 
     render() {
@@ -86,6 +105,7 @@ export default class Cards extends React.Component {
                     <FontAwesomeIcon icon={faTrashAlt} />
                     &ensp;Clear all
                 </button>
+                <Confirm />
             </div>
         )
     }
