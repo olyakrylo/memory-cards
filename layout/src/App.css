@@ -1,0 +1,22 @@
+.container__header {
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 0;
+    font-family: 'Noto Sans';
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.3;
+    color: #3c3c3c;
+}
+
+@media (max-width: 500px) {
+    .container__header {
+        font-size: 30px;
+        margin-top: 45px;
+    }
+}
+
+.container__header_seagreen {
+    color: #1a8f88;
+}

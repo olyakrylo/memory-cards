@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    background-color: #f4f4f4;
+    padding-bottom: 50px;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Light.woff');
+    font-style: normal;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Regular.woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url('./fonts/NotoSans-Bold.woff');
+    font-style: normal;
+    font-weight: 700;
+}
