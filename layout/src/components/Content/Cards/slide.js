@@ -1,5 +1,9 @@
 function slide(e, carousel) {
-    carousel.style.transition = 'none';
+    if(carousel.children.length <= 1) return;
+
+    let transitionProps = getComputedStyle(carousel).transitionProperty;
+    carousel.style.transitionProperty = transitionProps.replace(/(margin-left,|, margin-left|margin-left)/, '');
+    
     let startX = e.changedTouches[0].clientX;
     let margin = Math.abs(parseFloat(getComputedStyle(carousel).marginLeft));
     let width = parseFloat(getComputedStyle(carousel).width);
@@ -10,6 +14,8 @@ function slide(e, carousel) {
 
     let touchMove = e => {
         let x = e.changedTouches[0].clientX;
+        if (Math.abs(x - startX) < 30) return;
+        carousel.addEventListener('touchend', touchEnd);
         carousel.style.marginLeft = `${-margin + x - startX}px`;
         diffX = x > lastX ? -1 : 1;
         lastX = x;
@@ -23,7 +29,7 @@ function slide(e, carousel) {
 
     let touchEnd = e => {
         let endX = e.changedTouches[0].clientX;
-        carousel.style.transition = 'margin-left .3s ease-out';
+        carousel.style.transitionProperty = transitionProps;
         if (diffX === 1 && startX > endX) {
             carousel.style.marginLeft = `-${checkPoints[currentIndex + 1] || max}px`;
             currentIndex = Math.min(currentIndex + 1, blocksAmount - 1);
@@ -34,10 +40,10 @@ function slide(e, carousel) {
             carousel.style.marginLeft = `-${margin}px`;
         }
         this.setState({ currentIndex: currentIndex });
+        carousel.removeEventListener('touchmove', touchMove);
         carousel.removeEventListener('touchend', touchEnd);
     }
     carousel.addEventListener('touchmove', touchMove);
-    carousel.addEventListener('touchend', touchEnd);
 }
 
 export default slide;

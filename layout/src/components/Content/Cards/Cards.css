@@ -23,7 +23,9 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    transition: height .4s ease-in-out, margin-left .5s ease-in-out;
+    transition-property: margin-left, height;
+    transition-duration: .4s;
+    transition-timing-function: ease-in-out;
 }
 
 .cards__arrow {
@@ -72,6 +74,7 @@
     
     .cards__list {
         height: 200px;
+        /* transition: height .4s ease-in-out; */
     }
     
     .cards__arrow {

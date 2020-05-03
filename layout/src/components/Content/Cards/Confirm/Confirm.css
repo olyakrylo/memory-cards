@@ -52,6 +52,7 @@
     line-height: 40px;
     border-radius: 5px;
     outline: none;
+    cursor: pointer;
 }
 
 .confirm__btn_yes {

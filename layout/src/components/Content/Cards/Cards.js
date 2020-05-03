@@ -77,6 +77,13 @@ export default class Cards extends React.Component {
         confirm.addEventListener('click', handler);
     }
 
+    firstCard = () => {
+        if (this.state.cards.length) return;
+        return (
+            <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1} />
+        )
+    }
+
     render() {
         let curr = this.state.currentIndex;
         let len = this.state.cards.length;
@@ -87,6 +94,7 @@ export default class Cards extends React.Component {
             <div className='cards'>
                 <div className='cards__container' >
                     <ul className='cards__list' style={{marginLeft: mLeft}}>
+                        {this.firstCard()}
                         {[...this.genCards()]}
                     </ul>
                 </div>

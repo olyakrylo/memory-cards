@@ -2,6 +2,7 @@ import React from 'react';
 import './Item.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default class Item extends React.Component {
     state = {
@@ -21,14 +22,16 @@ export default class Item extends React.Component {
     }
 
     render() {
-        let { question, answer } = this.props;
+        let { question, answer, num } = this.props;
+        let delClass = 'cards__delete' + (~num ? '' : '_hidden');
         return (
-            <li className='cards__item' onClick={this.flip}>
-                <p className='cards__item-text'> 
-                {this.state.type === 'q' ? question : answer}
+            <li className={'cards__item'} onClick={this.flip}>
+                <p id={`card-${num}`} className='cards__item-text' > 
+                    {this.state.type === 'q' ? question : answer}
                 </p>
+                <FontAwesomeIcon className='cards__flip' icon={faSyncAlt} />
                 <FontAwesomeIcon 
-                    className='cards__delete' 
+                    className={delClass}
                     icon={faTrashAlt} 
                     onClick={(e) => this.props.deleteCard(e, this.props.num)} />
             </li>

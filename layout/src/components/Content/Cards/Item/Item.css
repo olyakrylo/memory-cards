@@ -19,14 +19,38 @@
     top: 145px;
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 75%;
+    max-height: 80%;
+    overflow: auto;
+    font-size: 22px;
 }
+
+.cards__item-text::-webkit-scrollbar { width: 0; }
+
+/* ie 10+ */
+.cards__item-text { -ms-overflow-style: none; }
+
+/* фф (свойство больше не работает, других способов тоже нет)*/
+.cards__item-text { overflow: -moz-scrollbars-none; }
 
 .cards__delete {
     position: absolute;
     bottom: 30px;
     right: 40px;
-    color: #b5b5b5;
+    color: rgba(174, 0, 0, 0.4);
     cursor: pointer;
+}
+
+.cards__delete_hidden {
+    display: none;
+}
+
+.cards__flip {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    cursor: pointer;
+    color: lightgrey;
 }
 
 @media (max-width: 500px) {
@@ -41,12 +65,18 @@
     .cards__item-text {
         left: 40vw;
         top: 100px;
-        font-size: 20px;
+        font-size: 17px;
     }
     
     .cards__delete {
         bottom: 20px;
-        right: 30px;
+        right: 20px;
+        font-size: 22px;
+    }
+
+    .cards__flip {
+        top: 20px;
+        left: 20px;
         font-size: 20px;
     }
 }
