@@ -13,12 +13,13 @@ export default class Adding extends React.Component {
             e.preventDefault();
             return;
         }
-        let cards = JSON.parse(localStorage.getItem('items')) || [];
-        cards.push({
-            question: question,
-            answer: answer
+        let {theme} = this.props;
+        let cardsInfo = JSON.parse(localStorage.getItem('memoryCards'));
+        cardsInfo[theme].cards.push({
+            q: question,
+            a: answer
         });
-        localStorage.setItem('items', JSON.stringify(cards));
+        localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
     }
 
     onInput = (e) => {

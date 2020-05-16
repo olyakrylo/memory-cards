@@ -7,10 +7,10 @@ import Item from './Item';
 import slide from './slide';
 import Confirm from './Confirm';
 
+
 export default class Cards extends React.Component {
     state = {
-        cards: JSON.parse(localStorage.getItem('items')) || [],
-        currentIndex: 0
+        cards: this.props.cards,
     };
 
     componentDidMount() {
@@ -27,36 +27,27 @@ export default class Cards extends React.Component {
             confirm.removeEventListener('click', handler);
             confirm.classList.add('confirm_hidden');
             if (e.target.dataset.del === 'no') return;
-            let newCards = this.state.cards.filter((el, i) => i !== Number(num));
-            let newCurr = this.state.currentIndex ? this.state.currentIndex - 1 : 0;
-            this.setState({
-                cards: newCards,
-                currentIndex: newCurr
-            });
-            localStorage.setItem('items', JSON.stringify(newCards));
+            this.props.delCard(num, false);
         }
         confirm.addEventListener('click', handler);
     }
 
     *genCards() {
-        let {cards} = this.state;
+        let { cards } = this.props;
         for (let i in cards) {
             yield (
-                <Item question={cards[i].question} answer={cards[i].answer} num={i} key={i}
+                <Item question={cards[i].q} answer={cards[i].a} num={i} key={i}
                       deleteCard={this.deleteCard} />
             )
         }
     }
 
     move(direction) {
-        if (direction === 'left' && this.state.currentIndex !== 0) {
-            this.setState({
-                currentIndex: this.state.currentIndex - 1
-            })
-        } else if (direction === 'right' && this.state.currentIndex !== this.state.cards.length - 1) {
-            this.setState({
-                currentIndex: this.state.currentIndex + 1
-            })
+        let { currCard, setCurrCard, cards } = this.props;
+        if (direction === 'left' && currCard !== 0) {
+            setCurrCard(currCard - 1);
+        } else if (direction === 'right' && currCard !== cards.length - 1) {
+            setCurrCard(currCard + 1);
         }
     }
 
@@ -68,27 +59,23 @@ export default class Cards extends React.Component {
             confirm.removeEventListener('click', handler);
             confirm.classList.add('confirm_hidden');
             if (e.target.dataset.del === 'no') return;
-            localStorage.removeItem('items');
-            this.setState({
-                cards: [],
-                currentIndex: 0
-            });
+            this.props.delCard(null, true);
         }
         confirm.addEventListener('click', handler);
     }
 
     firstCard = () => {
-        if (this.state.cards.length) return;
+        if (this.props.cards.length) return;
         return (
             <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1} />
         )
     }
 
     render() {
-        let curr = this.state.currentIndex;
-        let len = this.state.cards.length;
+        let curr = this.props.currCard;
+        let len = this.props.cards.length;
         let clientWidth = document.documentElement.clientWidth;
-        let containerWidth = clientWidth > 500 ? 600 : clientWidth * 0.9;
+        let containerWidth = clientWidth > 500 ? 500 : clientWidth * 0.9;
         let mLeft = -containerWidth * curr + 'px';
         return (
             <div className='cards'>

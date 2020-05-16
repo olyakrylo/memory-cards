@@ -9,6 +9,16 @@ import {
 } from "react-router-dom";
 
 class App extends React.Component {
+    state = {
+        theme: 0
+    }
+
+    setTheme = index => {
+        this.setState({
+            theme: index
+        });
+    }
+
     render() {
         return (
             <div className='container'>
@@ -16,8 +26,8 @@ class App extends React.Component {
                     <span className='container__header_seagreen'>Memory</span> cards
                 </p>
                 <Switch>
-                    <Route exact path='/' render={() => <Content />} />
-                    <Route path='/add' render={() => <Adding />} />
+                    <Route exact path='/' render={() => <Content setTheme={this.setTheme} />} />
+                    <Route path='/add' render={() => <Adding theme={this.state.theme}/>} />
                 </Switch>
             </div>
         )
