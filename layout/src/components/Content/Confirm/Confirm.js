@@ -4,7 +4,7 @@ import './Confirm.css';
 export default class Confirm extends React.Component {
     render() {
         return (
-            <div className='cards__confirm confirm confirm_hidden'>
+            <div className={`${this.props.addClass} confirm confirm_hidden`}>
                 <div className='confirm__window'>
                     <p className='confirm__title'>Are you sure?</p>
                     <div className='confirm__buttons'>

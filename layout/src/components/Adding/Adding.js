@@ -46,10 +46,10 @@ export default class Adding extends React.Component {
                     <textarea id='a-field' className='input__area'
                               onInput={this.onInput}></textarea>
                 </div>
-                <Link to='/'>
+                <Link to='/content'>
                     <button onClick={this.save} className='adding__save'>Save</button>
                 </Link>
-                <Link to='/'>
+                <Link to='/content'>
                     <FontAwesomeIcon className='adding__back' icon={faArrowLeft} />
                 </Link>
             </div>

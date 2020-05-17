@@ -5,7 +5,7 @@ import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import Item from './Item';
 import slide from './slide';
-import Confirm from './Confirm';
+import Confirm from '../Confirm';
 
 
 export default class Cards extends React.Component {
@@ -100,7 +100,7 @@ export default class Cards extends React.Component {
                     <FontAwesomeIcon icon={faTrashAlt} />
                     &ensp;Clear all
                 </button>
-                <Confirm />
+                <Confirm addClass='cards__confirm'/>
             </div>
         )
     }
