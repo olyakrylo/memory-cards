@@ -26,7 +26,7 @@ class App extends React.Component {
                     <span className='container__header_seagreen'>Memory</span> cards
                 </p>
                 <Switch>
-                    <Route exact path='/' render={() => <Content setTheme={this.setTheme} />} />
+                    <Route exact path='/' render={() => <Content setTheme={this.setTheme} theme={this.state.theme} />} />
                     <Route path='/add' render={() => <Adding theme={this.state.theme}/>} />
                 </Switch>
             </div>

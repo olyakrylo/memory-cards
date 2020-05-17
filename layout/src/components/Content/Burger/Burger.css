@@ -1,7 +1,7 @@
 .burger {
     position: fixed;
     z-index: 200;
-    top: 160px;
+    top: 70px;
     left: 30px;
 
     width: 35px;
@@ -51,8 +51,11 @@
 }
 
 .burger_cross > .burger__line_top, .burger_cross > .burger__line_bottom {
-    transform: translateY(10px) rotate(45deg);
     opacity: 0;
+}
+
+.burger_cross > .burger__line_bottom {
+    transform: translateY(10px) rotate(-45deg);
 }
 
 .burger_cross > .burger__line_top {
