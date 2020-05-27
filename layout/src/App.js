@@ -39,7 +39,7 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path='/' render={() => <Auth setUsername={this.setUsername} url={url} />} />
                     <Route exact path='/content' render={() => <Content setTheme={this.setTheme} theme={this.state.theme}
-                                                                        name={this.state.username} id={this.state.id} />} url={url}/>
+                                                                        name={this.state.username} id={this.state.id} url={url}/>} />
                     <Route path='/add' render={() => <Adding theme={this.state.theme} name={this.state.username} 
                                                              id={this.state.id} url={url}/>} />
                 </Switch>
