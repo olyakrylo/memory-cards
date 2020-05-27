@@ -1,2 +1,4 @@
 /layout/node_modules
 /layout/build
+/node_modules
+/old_server

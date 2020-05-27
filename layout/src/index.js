@@ -2,17 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import cardsInfo from './cardsInfo';
 
 import { HashRouter } from "react-router-dom";
 
-if (localStorage.getItem('memoryCards') === null) {
-    localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
-}
-
 ReactDOM.render((
         <HashRouter>
-            <App/>
+            <App url='https://mc-serv.herokuapp.com/users/'/>
+            {/* <App url='http://192.168.0.108:8000/users/'/> */}
         </HashRouter>
     ), document.getElementById('root')
 );

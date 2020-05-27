@@ -13,7 +13,7 @@ export default class Content extends React.Component {
         isMenuOpen: false,
         chosenTheme: this.props.theme,
         currCard: 0,
-        cardsInfo: JSON.parse(localStorage.getItem('memoryCards'))
+        cardsInfo: JSON.parse(localStorage.getItem('cards'))
     }
 
     toggleMenu = () => {
@@ -35,25 +35,50 @@ export default class Content extends React.Component {
         })
     }
 
+    updateCards = (cards, theme, curr) => {
+        fetch(this.props.url + this.props.id, {
+            method: "PUT",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "info": cards, "name": this.props.name })
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })
+        .then(user => {
+            this.setState({
+                cardsInfo: user.info,
+                chosenTheme: theme,
+                currCard: curr
+            });
+            localStorage.setItem('cards', JSON.stringify(user.info));
+        })
+    }
+
     addTheme = name => {
         let { cardsInfo } = this.state;
         cardsInfo.push({
             theme: name,
             cards: []
         });
-        this.setState({
-            cardsInfo: cardsInfo
-        });
-        localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
+        // this.setState({
+        //     cardsInfo: cardsInfo
+        // });
+        // localStorage.setItem('cards', JSON.stringify(cardsInfo));
+        this.updateCards(cardsInfo, this.state.chosenTheme, this.state.currCard);
     }
 
     delTheme = () => {
         let newCards = this.state.cardsInfo.filter((el, i) => i !== this.state.chosenTheme);
-        this.setState({
-            cardsInfo: newCards,
-            chosenTheme: 0
-        })
-        localStorage.setItem('memoryCards', JSON.stringify(newCards));
+        // this.setState({
+        //     cardsInfo: newCards,
+        //     chosenTheme: 0
+        // })
+        // localStorage.setItem('cards', JSON.stringify(newCards));
+        this.updateCards(newCards, 0, this.state.currCard);
     }
 
     shuffleTheme = () => {
@@ -74,11 +99,12 @@ export default class Content extends React.Component {
         let { cardsInfo, chosenTheme, currCard } = this.state;
         cardsInfo[chosenTheme].cards = all ? [] : cardsInfo[chosenTheme].cards.filter((el, i) => i !== Number(num));
         let newCurr = currCard && !all ? currCard - 1 : 0;
-        this.setState({
-            cardsInfo: cardsInfo,
-            currCard: newCurr
-        });
-        localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
+        // this.setState({
+        //     cardsInfo: cardsInfo,
+        //     currCard: newCurr
+        // });
+        // localStorage.setItem('cards', JSON.stringify(cardsInfo));
+        this.updateCards(cardsInfo, this.state.chosenTheme, newCurr);
     }
 
     quit = () => {
@@ -89,6 +115,7 @@ export default class Content extends React.Component {
             confirm.removeEventListener('click', handler);
             confirm.classList.add('confirm_hidden');
             if (e.target.dataset.del === 'no') return;
+            localStorage.clear();
             let href = window.location.href.match(/^.+\/#\//);
             window.location.assign(href[0]);
         }
@@ -96,6 +123,11 @@ export default class Content extends React.Component {
     }
 
     render() {
+        if (!this.props.name) {
+            let href = window.location.href.match(/^.+\/#\//);
+            window.location.assign(href[0]);
+            return null;
+        }
         let cardsLength = this.state.cardsInfo[this.state.chosenTheme].cards.length;
         return (
             <div className='content'>

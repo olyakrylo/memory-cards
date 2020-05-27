@@ -20,7 +20,54 @@ export default class Auth extends React.Component {
             document.querySelector('.auth__info').classList.add('auth__info_show');
             return;
         }
-        this.props.setUsername(input.value);
+
+        fetch(this.props.url, {
+            method: "GET",
+        })       
+        .then(response => response.json())
+        .then(users => {
+            let user = users.find(x => x.name === input.value);
+            if (user) {
+                this.login(user)
+            } else {
+                this.signup(input.value)
+            }
+        });
+    }
+
+    login = user => {
+        fetch(this.props.url + user.id, {
+            method: "GET"
+        })
+        .then(response => response.json())
+        .then(info => {
+            this.enter(user.name, user.id, info);
+        })
+    }
+
+    signup = name => {
+        fetch(this.props.url, {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "name": name })
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json()
+            }
+        })
+        .then(user => {
+            this.enter(user.name, user._id, user.info)
+        })
+    }
+
+    enter = (name, id, info) => {
+        this.props.setUsername(name, id);
+        localStorage.setItem('name', name);
+        localStorage.setItem('id', id);
+        localStorage.setItem('cards', JSON.stringify(info));
         window.location.assign(window.location.href + 'content');
     }
 

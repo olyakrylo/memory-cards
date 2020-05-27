@@ -12,7 +12,8 @@ import {
 class App extends React.Component {
     state = {
         theme: 0,
-        username: 'default name kek'
+        username: localStorage.getItem('name'),
+        id: localStorage.getItem('id')
     }
 
     setTheme = index => {
@@ -21,23 +22,26 @@ class App extends React.Component {
         });
     }
 
-    setUsername = name => {
+    setUsername = (name, id) => {
         this.setState({
-            username: name
+            username: name,
+            id: id
         });
     }
 
     render() {
+        let { url } = this.props;
         return (
             <div className='container'>
                 <p className='container__header'>
                     <span className='container__header_seagreen'>Memory</span> cards
                 </p>
                 <Switch>
-                    <Route exact path='/' render={() => <Auth setUsername={this.setUsername} />} />
+                    <Route exact path='/' render={() => <Auth setUsername={this.setUsername} url={url} />} />
                     <Route exact path='/content' render={() => <Content setTheme={this.setTheme} theme={this.state.theme}
-                                                                        name={this.state.username} />} />
-                    <Route path='/add' render={() => <Adding theme={this.state.theme}/>} />
+                                                                        name={this.state.username} id={this.state.id} />} url={url}/>
+                    <Route path='/add' render={() => <Adding theme={this.state.theme} name={this.state.username} 
+                                                             id={this.state.id} url={url}/>} />
                 </Switch>
             </div>
         )

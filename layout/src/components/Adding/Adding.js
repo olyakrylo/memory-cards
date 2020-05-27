@@ -13,13 +13,33 @@ export default class Adding extends React.Component {
             e.preventDefault();
             return;
         }
-        let {theme} = this.props;
-        let cardsInfo = JSON.parse(localStorage.getItem('memoryCards'));
+        let { theme } = this.props;
+        let cardsInfo = JSON.parse(localStorage.getItem('cards'));
+        // console.log(cardsInfo);
         cardsInfo[theme].cards.push({
             q: question,
             a: answer
         });
-        localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
+        fetch(this.props.url + this.props.id, {
+            method: "PUT",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "info": cardsInfo, "name": this.props.name })
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                e.preventDefault();
+            }
+        })
+        .then(user => {
+            localStorage.setItem('cards', JSON.stringify(user.info));
+            let href = window.location.href.match(/^.+\/#\//);
+            window.location.assign(href[0] + 'content');
+        })
+        // localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
     }
 
     onInput = (e) => {
@@ -33,6 +53,11 @@ export default class Adding extends React.Component {
 
 
     render() {
+        if (!this.props.id) {
+            let href = window.location.href.match(/^.+\/#\//);
+            window.location.assign(href[0]);
+            return null;
+        }
         return (
             <div className='adding'>
                 <p className='adding__warning adding__warning_hidden'>No question or answer!</p>
@@ -46,9 +71,9 @@ export default class Adding extends React.Component {
                     <textarea id='a-field' className='input__area'
                               onInput={this.onInput}></textarea>
                 </div>
-                <Link to='/content'>
+                {/* <Link to='/content'> */}
                     <button onClick={this.save} className='adding__save'>Save</button>
-                </Link>
+                {/* </Link> */}
                 <Link to='/content'>
                     <FontAwesomeIcon className='adding__back' icon={faArrowLeft} />
                 </Link>
