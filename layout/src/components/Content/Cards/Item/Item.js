@@ -9,25 +9,29 @@ export default class Item extends React.Component {
         type: 'q',
     }
 
-    flip = () => {
+    flip = (event) => {
         let list = document.querySelector('.cards__list');
-        let height = parseFloat(getComputedStyle(list).height, 10);
-        list.style.height = '0px';
-        setTimeout(() => {
+        list.classList.add('cards__list_hidden');
+
+        let itemText = event.target.querySelector('.cards__item-text');
+        let { question, answer } = this.props;
+        setTimeout(() => {  
+            let { type } = this.state;
+            itemText.textContent = type === 'q' ? answer : question;
             this.setState({
-                type: this.state.type === 'q' ? 't' : 'q'
+                type: type === 'q' ? 'a' : 'q'
             });
-            list.style.height = height + 'px';
-        }, 400);
+            list.classList.remove('cards__list_hidden');
+        }, 300);
     }
 
     render() {
-        let { question, answer, num } = this.props;
+        let { question, num } = this.props;
         let delClass = 'cards__delete' + (~num ? '' : '_hidden');
         return (
             <li className={'cards__item'} onClick={this.flip}>
-                <p id={`card-${num}`} className='cards__item-text' > 
-                    {this.state.type === 'q' ? question : answer}
+                <p id={`card-${num}`} className='cards__item-text' >
+                    {question}
                 </p>
                 <FontAwesomeIcon className='cards__flip' icon={faSyncAlt} />
                 <FontAwesomeIcon 

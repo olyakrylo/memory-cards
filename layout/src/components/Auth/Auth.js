@@ -1,66 +1,29 @@
 import React from 'react';
 import './Auth.css';
+import Login from './Login';
+import Signup from './Signup';
 
 export default class Auth extends React.Component {
-
-    authOnInput = e => {
-        let button = document.querySelector('.auth__btn');
-        document.querySelector('.auth__info').classList.remove('auth__info_show');
-        if (e.target.value) {
-            button.classList.add('auth__btn_red');
-        } else {
-            button.classList.remove('auth__btn_red');
-        }
+    state = {
+        window: 'login'
     }
 
-    auth = () => {
-        let input = document.querySelector('.auth__input');
-        let regexp = /^\w{3,20}$/;
-        if (!input.value.length || !regexp.test(input.value)) {
-            document.querySelector('.auth__info').classList.add('auth__info_show');
-            return;
-        }
-
-        fetch(this.props.url, {
-            method: "GET",
-        })       
-        .then(response => response.json())
-        .then(users => {
-            let user = users.find(x => x.name === input.value);
-            if (user) {
-                this.login(user)
-            } else {
-                this.signup(input.value)
-            }
-        });
+    showAlert = (text) => {
+        let alert = document.querySelector('.alert');
+        alert.querySelector('.alert__text').textContent = text;
+        alert.classList.add('alert_show');
     }
 
-    login = user => {
-        fetch(this.props.url + user.id, {
-            method: "GET"
-        })
-        .then(response => response.json())
-        .then(info => {
-            this.enter(user.name, user.id, info);
-        })
-    }
-
-    signup = name => {
-        fetch(this.props.url, {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ "name": name })
-        })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json()
-            }
-        })
-        .then(user => {
-            this.enter(user.name, user._id, user.info)
-        })
+    setWindow = name => {
+        document.querySelector('.auth__info-text').classList.remove('auth__info-text_show');
+        let auth = document.querySelector('.auth');
+        auth.classList.add('auth_hidden');
+        setTimeout(() => {
+            this.setState({
+                window: name
+            });
+            auth.classList.remove('auth_hidden');
+        }, 300);
     }
 
     enter = (name, id, info) => {
@@ -71,22 +34,48 @@ export default class Auth extends React.Component {
         window.location.assign(window.location.href + 'content');
     }
 
-    keyUp = e => {
-        if (e.key === 'Enter' && e.target.value.length) {
-            this.auth();
+    toggleInfo = () => {
+        document.querySelector('.auth__info-text').classList.toggle('auth__info-text_show');
+    }
+
+    showInfo = (shouldShow) => {
+        if (shouldShow) {
+            document.querySelector('.auth__info-text').classList.add('auth__info-text_show');
+        } else {
+            document.querySelector('.auth__info-text').classList.remove('auth__info-text_show');
         }
+    }
+
+    renderWindow = () => {
+        let { url } = this.props;
+        if (this.state.window === 'login') {
+            return <Login setWindow={this.setWindow} enter={this.enter} url={url} showAlert={this.showAlert} />;
+        }
+        return <Signup setWindow={this.setWindow} enter={this.enter} url={url} showInfo={this.showInfo} showAlert={this.showAlert} />;
+    }
+
+    setInfoText = () => {
+        if (this.state.window === 'login') {
+            return "If you don't have an account, click sign up.";
+        }
+        return <span>Valid characters:<br />aA-zZ, 0-9 and _.<br />Login should contain at least 3 symbols, password - 6.</span>;
+    }
+
+    setAuthTitle = () => {
+        if (this.state.window === 'login') {
+            return "Authorization";
+        }
+        return "Registration";
     }
 
     render() {
         return (
             <div className='auth'>
-                <p className='auth__title'>Authorization</p>
-                <p className='auth__info'>From 3 to 20 symbols (A-Z, a-z, 0-9 or _)</p>
-                <div className='auth__form'>
-                    <input className='auth__input' maxLength='20' minLength='3' onInput={this.authOnInput} onKeyUp={this.keyUp}
-                           onClick={e => e.preventDefault()}/>
-                    <button className='auth__btn' onClick={this.auth}>Go!</button>
-                </div>
+                <p className='auth__title'>{this.setAuthTitle()}</p>
+                <button className='auth__info-btn' onClick={this.toggleInfo}>i</button>
+                <div className='auth__info-text'>{this.setInfoText()}</div>
+                {this.renderWindow()}
+
             </div>
         )
     }

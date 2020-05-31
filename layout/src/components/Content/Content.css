@@ -39,7 +39,11 @@
     color: var(--red);
     opacity: 0.5;
     cursor: pointer;
-    transition: visibility .3s ease-in-out;
+    transition: opacity .3s ease-in-out;
+}
+
+.content__shuffle_on {
+    opacity: 1;
 }
 
 .content__shuffle_hidden {

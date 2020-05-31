@@ -5,7 +5,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 export default class Adding extends React.Component {
-    save = (e) => {
+    validate = (e) => {
         let question = document.querySelector('#q-field').value;
         let answer = document.querySelector('#a-field').value;
         if (!question || !answer) {
@@ -13,13 +13,18 @@ export default class Adding extends React.Component {
             e.preventDefault();
             return;
         }
+
+        this.save(question, answer);
+    }
+
+    save = (question, answer) => {
         let { theme } = this.props;
         let cardsInfo = JSON.parse(localStorage.getItem('cards'));
-        // console.log(cardsInfo);
         cardsInfo[theme].cards.push({
             q: question,
             a: answer
         });
+        document.querySelector('.loading').classList.remove('loading_hidden');
         fetch(this.props.url + this.props.id, {
             method: "PUT",
             headers:{
@@ -31,7 +36,8 @@ export default class Adding extends React.Component {
             if (response.status === 200) {
                 return response.json();
             } else {
-                e.preventDefault();
+                document.querySelector('.loading').classList.add('loading_hidden');
+                return;
             }
         })
         .then(user => {
@@ -39,7 +45,6 @@ export default class Adding extends React.Component {
             let href = window.location.href.match(/^.+\/#\//);
             window.location.assign(href[0] + 'content');
         })
-        // localStorage.setItem('memoryCards', JSON.stringify(cardsInfo));
     }
 
     onInput = (e) => {
@@ -71,9 +76,7 @@ export default class Adding extends React.Component {
                     <textarea id='a-field' className='input__area'
                               onInput={this.onInput}></textarea>
                 </div>
-                {/* <Link to='/content'> */}
-                    <button onClick={this.save} className='adding__save'>Save</button>
-                {/* </Link> */}
+                <button onClick={this.validate} className='adding__save'>Save</button>
                 <Link to='/content'>
                     <FontAwesomeIcon className='adding__back' icon={faArrowLeft} />
                 </Link>

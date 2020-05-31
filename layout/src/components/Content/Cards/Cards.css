@@ -22,10 +22,14 @@
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translateY(-50%);
-    transition-property: margin-left, height;
-    transition-duration: .4s;
+    transform: translateY(-50%) scaleY(1);
+    transition-property: margin-left, transform;
+    transition-duration: .3s;
     transition-timing-function: ease-in-out;
+}
+
+.cards__list_hidden {
+    transform: translateY(-50%) scaleY(0);
 }
 
 .cards__arrow {

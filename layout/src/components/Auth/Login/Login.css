@@ -1,0 +1,75 @@
+:root {
+    --input-width: 200px;
+}
+
+.login__input-container {
+    /* background-color: lightcoral; */
+    position: relative;
+}
+
+.login__input {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    font: inherit;
+    width: var(--input-width);
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--seagreen);
+    color: var(--lightred);
+    height: 32px;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    background-color: transparent;
+}
+
+::placeholder {
+    color: var(--lightred);
+    opacity: 0.5;
+}
+
+/* .login__check {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .8em;
+    color: green;
+} */
+
+.login__buttons {
+    margin: auto;
+    margin-top: 25px;
+    /* background-color: red; */
+    width: var(--input-width);
+    display: flex;
+    justify-content: space-between;
+}
+
+.login__btn {
+    font: inherit;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    transition: color .3s ease-in-out;
+    cursor: pointer;
+}
+
+.login__btn_transparent {
+    background-color: transparent;
+    color: var(--seagreen);
+    border: 2px solid var(--seagreen);
+}
+
+.login__btn_seagreen {
+    background-color: var(--seagreen);
+    color: var(--lightgray);
+    border: none;
+}
+
+.login__btn_red {
+    color: var(--lightred);
+    cursor: pointer;
+}

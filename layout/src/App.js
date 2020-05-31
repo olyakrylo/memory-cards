@@ -2,6 +2,8 @@ import React from 'react';
 import Content from './components/Content';
 import Adding from './components/Adding';
 import Auth from './components/Auth';
+import Loading from './components/Loading';
+import Alert from './components/Alert';
 import './App.css';
 
 import {
@@ -36,6 +38,8 @@ class App extends React.Component {
                 <p className='container__header'>
                     <span className='container__header_seagreen'>Memory</span> cards
                 </p>
+                <Loading />
+                <Alert />
                 <Switch>
                     <Route exact path='/' render={() => <Auth setUsername={this.setUsername} url={url} />} />
                     <Route exact path='/content' render={() => <Content setTheme={this.setTheme} theme={this.state.theme}

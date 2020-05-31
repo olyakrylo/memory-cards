@@ -1,0 +1,78 @@
+:root {
+    --input-width: 200px;
+}
+
+.signup__back {
+    position: absolute;
+    left: 25px;
+    top: 25px;
+    color: #b5b5b5;
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.signup__input-container {
+    /* background-color: lightcoral; */
+    position: relative;
+}
+
+.signup__input {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    font: inherit;
+    width: var(--input-width);
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--seagreen);
+    color: var(--lightred);
+    height: 32px;
+    box-sizing: border-box;
+    font-size: 1em;
+    background-color: transparent;
+}
+
+::placeholder {
+    color: var(--lightred);
+    opacity: 0.5;
+}
+
+.signup__check {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .8em;
+    visibility: hidden;
+}
+
+.signup__check_show {
+    visibility: visible;
+}
+
+.signup__check_green {
+    color: green;
+}
+
+.signup__check_red {
+    color: red;
+}
+
+.signup__btn {
+    display: block;
+    margin: auto;
+    margin-top: 25px;
+    font: inherit;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    transition: color .3s ease-in-out;
+    background-color: var(--seagreen);
+    color: var(--lightgray);
+    border: none;
+    cursor: pointer;
+    /* background-color: red; */
+}

@@ -9,11 +9,16 @@ import { faRandom } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
 export default class Content extends React.Component {
+    componentDidMount() {
+        document.querySelector('.loading').classList.add('loading_hidden');
+    }
+
     state = {
         isMenuOpen: false,
         chosenTheme: this.props.theme,
         currCard: 0,
-        cardsInfo: JSON.parse(localStorage.getItem('cards'))
+        cardsInfo: JSON.parse(localStorage.getItem('cards')),
+        shuffledThemes: []
     }
 
     toggleMenu = () => {
@@ -36,6 +41,7 @@ export default class Content extends React.Component {
     }
 
     updateCards = (cards, theme, curr) => {
+        document.querySelector('.loading').classList.remove('loading_hidden');
         fetch(this.props.url + this.props.id, {
             method: "PUT",
             headers:{
@@ -46,9 +52,12 @@ export default class Content extends React.Component {
         .then(response => {
             if (response.status === 200) {
                 return response.json();
+            } else {
+                document.querySelector('.loading').classList.add('loading_hidden');
             }
         })
         .then(user => {
+            document.querySelector('.loading').classList.add('loading_hidden');
             this.setState({
                 cardsInfo: user.info,
                 chosenTheme: theme,
@@ -64,34 +73,34 @@ export default class Content extends React.Component {
             theme: name,
             cards: []
         });
-        // this.setState({
-        //     cardsInfo: cardsInfo
-        // });
-        // localStorage.setItem('cards', JSON.stringify(cardsInfo));
         this.updateCards(cardsInfo, this.state.chosenTheme, this.state.currCard);
     }
 
     delTheme = () => {
         let newCards = this.state.cardsInfo.filter((el, i) => i !== this.state.chosenTheme);
-        // this.setState({
-        //     cardsInfo: newCards,
-        //     chosenTheme: 0
-        // })
-        // localStorage.setItem('cards', JSON.stringify(newCards));
         this.updateCards(newCards, 0, this.state.currCard);
     }
 
-    shuffleTheme = () => {
-        let { cardsInfo, chosenTheme } = this.state;
-        let { cards } = cardsInfo[chosenTheme];
-        for (let i = cards.length - 1; i > 0; --i) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [cards[i], cards[j]] = [cards[j], cards[i]];
+    shuffleTheme = (e) => {
+        let { cardsInfo, chosenTheme, shuffledThemes } = this.state;
+
+        let { cards } = JSON.parse(localStorage.getItem('cards'))[chosenTheme];
+        if (!~shuffledThemes.indexOf(chosenTheme)) {
+            for (let i = cards.length - 1; i > 0; --i) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            shuffledThemes.push(chosenTheme);
+        } else {
+            shuffledThemes = shuffledThemes.filter(x => x !== chosenTheme);
         }
         cardsInfo[chosenTheme].cards = cards;
+
+        e.currentTarget.classList.toggle('content__shuffle_on');
         this.setState({
             cardsInfo: cardsInfo,
-            currCard: 0
+            currCard: 0,
+            shuffledThemes: shuffledThemes
         });
     }
 
@@ -99,11 +108,6 @@ export default class Content extends React.Component {
         let { cardsInfo, chosenTheme, currCard } = this.state;
         cardsInfo[chosenTheme].cards = all ? [] : cardsInfo[chosenTheme].cards.filter((el, i) => i !== Number(num));
         let newCurr = currCard && !all ? currCard - 1 : 0;
-        // this.setState({
-        //     cardsInfo: cardsInfo,
-        //     currCard: newCurr
-        // });
-        // localStorage.setItem('cards', JSON.stringify(cardsInfo));
         this.updateCards(cardsInfo, this.state.chosenTheme, newCurr);
     }
 
