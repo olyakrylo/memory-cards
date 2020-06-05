@@ -15,9 +15,9 @@
     padding-top: 70px;
     border-radius: 20px;
     box-shadow: var(--shadow);
-    background-color: #fff;
-    transition-property: left, width;
-    transition-duration: .4s;
+    background-color: var(--white);
+    transition-property: left, width, background-color;
+    transition-duration: .3s;
     transition-timing-function: ease-in-out;
     font-size: var(--fs);
 }
@@ -70,7 +70,7 @@
 .theme_chosen > .theme__del {
     display: initial;
     margin-right: 20px;
-    color: var(--red);
+    color: var(--lightred);
 }
 
 .theme_chosen > .theme__del_hidden {
@@ -111,6 +111,7 @@
     width: 0;
     font-family: 'Noto Sans';
     transition: width .3s ease-in-out;
+    background-color: transparent;
 }
 
 .menu__add-input_show {

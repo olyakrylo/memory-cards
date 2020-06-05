@@ -40,9 +40,10 @@ export default class Login extends React.Component {
     }
 
     checkInput = () => {
-        let name = document.querySelector('.signup__input[type="login"]').value;
+        let name = document.querySelector('.signup__input[type="login"]').value.toLowerCase();
         let password = document.querySelectorAll('.signup__input[type="password"]')[0].value;
         let confPassword = document.querySelectorAll('.signup__input[type="password"]')[1].value;
+
         if (!/^\w{3,}$/.test(name) || !/^\w{6,}$/.test(password) || password !== confPassword) {
             this.props.showInfo(!/^\w{3,}$/.test(name) || !/^\w{6,}$/.test(password));
             if (password !== confPassword) {
@@ -59,22 +60,35 @@ export default class Login extends React.Component {
         };
     }
 
+    secondPasswordInput = e => {
+        let password = document.querySelectorAll('.signup__input[type="password"]')[0].value;
+        if (e.target.value === password) {
+            document.querySelector('.signup__check').classList.remove('signup__check_show');
+        }
+    }
+
+    enter = e => {
+        if (e.key === 'Enter') {
+            this.validate();
+        }
+    }
+
     render() {
         return (
             <div className='auth__form signup'>
                 <FontAwesomeIcon icon={faArrowLeft} className='signup__back' onClick={() => this.props.setWindow('login')} />
 
                 <div className='signup__input-container'>
-                    <input className='signup__input' maxLength='20' minLength='3' onInput={this.authOnInput}
+                    <input className='signup__input' maxLength='20' minLength='3'
                         onClick={e => e.preventDefault()} type='login' placeholder='login' />
                 </div>
                 <div className='signup__input-container'>
-                    <input className='signup__input' maxLength='20' minLength='8' onInput={this.authOnInput}
+                    <input className='signup__input' maxLength='20' minLength='8'
                         onClick={e => e.preventDefault()} type='password' placeholder='password' />
                 </div>
                 <div className='signup__input-container'>
-                    <input className='signup__input' maxLength='20' minLength='8' onInput={this.authOnInput}
-                        onClick={e => e.preventDefault()} type='password' placeholder='confirm password' />
+                    <input className='signup__input' maxLength='20' minLength='8' onInput={this.secondPasswordInput}
+                        onClick={e => e.preventDefault()} type='password' placeholder='confirm password' onKeyUp={this.enter} />
                     <FontAwesomeIcon icon={faTimes} className='signup__check signup__check_red' />
                 </div>
                     

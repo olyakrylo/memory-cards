@@ -11,12 +11,19 @@ import Confirm from '../Confirm';
 export default class Cards extends React.Component {
     state = {
         cards: this.props.cards,
+        // type: 'q'
     };
 
     componentDidMount() {
         let carousel = document.querySelector('.cards__list');
         carousel.addEventListener('touchstart', e => slide.call(this, e, carousel));
     }
+
+    // setType = (name) => {
+    //     this.setState({
+    //         type: name
+    //     });
+    // }
 
     deleteCard = (e, num) => {
         e.stopPropagation();
@@ -37,7 +44,7 @@ export default class Cards extends React.Component {
         for (let i in cards) {
             yield (
                 <Item question={cards[i].q} answer={cards[i].a} num={i} key={i}
-                      deleteCard={this.deleteCard} />
+                      deleteCard={this.deleteCard} type={this.props.type} setType={this.props.setType} />
             )
         }
     }
@@ -67,7 +74,8 @@ export default class Cards extends React.Component {
     firstCard = () => {
         if (this.props.cards.length) return;
         return (
-            <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1} />
+            <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1}
+                  type={this.props.type} setType={this.props.setType} />
         )
     }
 

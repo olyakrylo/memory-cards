@@ -7,12 +7,12 @@ export default class Menu extends React.Component {
     themeClicked = (e) => {
         let index = Number(e.target.dataset.num);
         this.props.setTheme(index);
+        this.props.setType('q');
     }
 
     *genThemes() {
         let { chosenTheme, themes } = this.props;
         for (let i in themes) {
-            // console.log(typeof i)
             yield (
                 <div className={`menu__theme theme ${Number(i) === chosenTheme ? 'theme_chosen' : ''}`} key={i}>
                     <p className='theme__name' data-num={i} onClick={this.themeClicked}>

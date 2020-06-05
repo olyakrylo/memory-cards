@@ -71,7 +71,7 @@
     outline: none;
     transition: color .3s ease-in-out;
     background-color: var(--seagreen);
-    color: var(--lightgray);
+    color: var(--white);
     border: none;
     cursor: pointer;
     /* background-color: red; */

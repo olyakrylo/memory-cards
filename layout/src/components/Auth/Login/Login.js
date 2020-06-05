@@ -1,11 +1,10 @@
 import React from 'react';
 import './Login.css';
-// import Loading from '../../Loading';
 
 export default class Login extends React.Component {
 
     login = () => {
-        let name = document.querySelector('.login__input[type="login"]').value;
+        let name = document.querySelector('.login__input[type="login"]').value.toLowerCase();
         let password = document.querySelector('.login__input[type="password"]').value;
         if (!/^\w{3,}$/.test(name) || !/^\w{6,}$/.test(password)) {
             return;
@@ -45,8 +44,6 @@ export default class Login extends React.Component {
         })
     }
 
-    // showAlert = () 
-
     keyUp = e => {
         if (e.key === 'Enter' && e.target.value.length) {
             this.login();
@@ -56,7 +53,6 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className='auth__form login'>
-                {/* <Loading /> */}
                 <div className='login__input-container'>
                     <input className='login__input' maxLength='20' minLength='3' onInput={this.authOnInput}
                         onClick={e => e.preventDefault()} type='login' placeholder='login' />

@@ -5,6 +5,9 @@ import Auth from './components/Auth';
 import Loading from './components/Loading';
 import Alert from './components/Alert';
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon } from '@fortawesome/free-regular-svg-icons';
+// import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 import {
   Route,
@@ -31,12 +34,17 @@ class App extends React.Component {
         });
     }
 
+    changeColorTheme = () => {
+        document.querySelector('.root').classList.toggle('root_black');
+    }
+
     render() {
         let { url } = this.props;
         return (
             <div className='container'>
                 <p className='container__header'>
                     <span className='container__header_seagreen'>Memory</span> cards
+                    <FontAwesomeIcon icon={faMoon} className='moon' onClick={this.changeColorTheme} />
                 </p>
                 <Loading />
                 <Alert />

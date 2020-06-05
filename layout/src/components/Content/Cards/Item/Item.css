@@ -4,11 +4,12 @@
     overflow: hidden;
     margin-left: 20px;
     margin-right: 20px;
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 20px;
     box-shadow: var(--shadow);
     float: left;
     position: relative;
+    transition: background-color .3s ease-in-out;
 }
 
 .cards__item-text {
@@ -23,6 +24,7 @@
     max-height: 80%;
     overflow: auto;
     font-size: 22px;
+    color: var(--text-color);
 }
 
 .cards__item-text::-webkit-scrollbar { width: 0; }
@@ -37,7 +39,7 @@
     position: absolute;
     bottom: 30px;
     right: 30px;
-    color: rgba(174, 0, 0, 0.4);
+    color: var(--lightred);
     cursor: pointer;
 }
 

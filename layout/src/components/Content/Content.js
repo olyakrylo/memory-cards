@@ -18,13 +18,20 @@ export default class Content extends React.Component {
         chosenTheme: this.props.theme,
         currCard: 0,
         cardsInfo: JSON.parse(localStorage.getItem('cards')),
-        shuffledThemes: []
+        shuffledThemes: [],
+        type: 'q'
     }
 
     toggleMenu = () => {
         this.setState({
             isMenuOpen: !this.state.isMenuOpen
         })
+    }
+
+    setType = (name) => {
+        this.setState({
+            type: name
+        });
     }
 
     setTheme = num => {
@@ -142,7 +149,9 @@ export default class Content extends React.Component {
                 <Cards cards={this.state.cardsInfo[this.state.chosenTheme].cards}
                        currCard={this.state.currCard}
                        setCurrCard={this.setCurrCard}
-                       delCard={this.delCard} />
+                       delCard={this.delCard}
+                       type={this.state.type}
+                       setType={this.setType} />
 
                 <FontAwesomeIcon icon={faRandom} onClick={this.shuffleTheme}
                                  className={`content__shuffle ${cardsLength > 1 ? '' : 'content__shuffle_hidden'}`} />
@@ -153,7 +162,8 @@ export default class Content extends React.Component {
                       chosenTheme={this.state.chosenTheme}
                       setTheme={this.setTheme}
                       addTheme={this.addTheme}
-                      delTheme={this.delTheme} />
+                      delTheme={this.delTheme}
+                      setType={this.setType} />
 
                 <button className='content__quit' onClick={this.quit}>Quit</button>
 

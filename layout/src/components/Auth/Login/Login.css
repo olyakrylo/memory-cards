@@ -65,7 +65,7 @@
 
 .login__btn_seagreen {
     background-color: var(--seagreen);
-    color: var(--lightgray);
+    color: var(--white);
     border: none;
 }
 
