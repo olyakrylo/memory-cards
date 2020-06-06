@@ -38,7 +38,7 @@ export default class Cards extends React.Component {
         for (let i in cards) {
             yield (
                 <Item question={cards[i].q} answer={cards[i].a} num={i} key={i} flip={this.flip}
-                      deleteCard={this.deleteCard} type={this.props.type} />
+                      deleteCard={this.deleteCard} type={this.props.type} setEditing={this.props.setEditing} />
             )
         }
     }
@@ -87,7 +87,7 @@ export default class Cards extends React.Component {
         if (this.props.cards.length) return;
         return (
             <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1}
-                  type={this.props.type} flip={this.flip} />
+                  type={this.props.type} flip={this.flip} setEditing={this.props.setEditing} />
         )
     }
 

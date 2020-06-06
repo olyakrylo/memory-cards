@@ -4,7 +4,7 @@ import Cards from './Cards';
 import Menu from './Menu';
 import Burger from './Burger';
 import Confirm from './Confirm';
-// import Editing from './Editing';
+import Editing from './Editing';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRandom } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
@@ -20,7 +20,8 @@ export default class Content extends React.Component {
         currCard: 0,
         cardsInfo: JSON.parse(localStorage.getItem('cards')),
         shuffledThemes: [],
-        type: 'q'
+        type: 'q',
+        showEditing: false
     }
 
     toggleMenu = () => {
@@ -134,6 +135,23 @@ export default class Content extends React.Component {
         confirm.addEventListener('click', handler);
     }
 
+    showEditing = () => {
+        if (!this.state.showEditing) return;
+        return (
+            <Editing theme={this.state.chosenTheme} 
+                     currCard={this.state.currCard} 
+                     cardsInfo={this.state.cardsInfo}
+                     updateCards={this.updateCards}
+                     setEditing={this.setEditing} />
+        )
+    }
+
+    setEditing = show => {
+        this.setState({
+            showEditing: show
+        });
+    }
+
     render() {
         if (!this.props.name) {
             let href = window.location.href.match(/^.+\/#\//);
@@ -152,7 +170,8 @@ export default class Content extends React.Component {
                        setCurrCard={this.setCurrCard}
                        delCard={this.delCard}
                        type={this.state.type}
-                       setType={this.setType} />
+                       setType={this.setType}
+                       setEditing={this.setEditing} />
 
                 <FontAwesomeIcon icon={faRandom} onClick={this.shuffleTheme}
                                  className={`content__shuffle ${cardsLength > 1 ? '' : 'content__shuffle_hidden'}`} />
@@ -169,7 +188,7 @@ export default class Content extends React.Component {
                 <button className='content__quit' onClick={this.quit}>Quit</button>
 
                 <Confirm addClass='quit__confirm'/>
-                {/* <Editing />      */}
+                {this.showEditing()}
             </div>
         )
     }

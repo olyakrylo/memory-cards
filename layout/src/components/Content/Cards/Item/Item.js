@@ -4,6 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 
 export default class Item extends React.Component {
+    openEditing = e => {
+        e.stopPropagation();
+        this.props.setEditing(true);
+    }
+
     render() {
         let { question, num, answer } = this.props;
         let delClass = 'cards__delete' + (~num ? '' : '_hidden');
@@ -13,7 +18,8 @@ export default class Item extends React.Component {
                 <p id={`card-${num}`} className='cards__item-text' >
                     {this.props.type === 'q' ? question : answer}
                 </p>
-                <FontAwesomeIcon className={editClass} icon={faEdit} />
+                <FontAwesomeIcon className={editClass} icon={faEdit}
+                                 onClick={this.openEditing} />
                 <FontAwesomeIcon 
                     className={delClass}
                     icon={faTrashAlt} 
