@@ -53,6 +53,27 @@
     color: var(--darkgray);
     text-align: center;
     margin: 0;
+    font-size: 1em;
+}
+
+.counter__input {
+    width: 60px;
+    padding: 2px 10px;
+    outline: none;
+    box-sizing: border-box;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: 1px solid var(--darkgray);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.counter__input_wrong {
+    border-color: transparent;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
+    -moz-box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
+    box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
 }
 
 .cards__clear {
@@ -88,6 +109,10 @@
         font-size: 20px;
         text-align: center;
         margin: 0;
+    }
+
+    .counter__input {
+        width: 45px;
     }
 
     .cards__clear {

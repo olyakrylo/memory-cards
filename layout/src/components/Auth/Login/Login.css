@@ -3,7 +3,6 @@
 }
 
 .login__input-container {
-    /* background-color: lightcoral; */
     position: relative;
 }
 
@@ -16,10 +15,10 @@
     outline: none;
     border: none;
     border-bottom: 2px solid var(--seagreen);
-    color: var(--lightred);
+    color: var(--text-color);
     height: 32px;
     box-sizing: border-box;
-    font-size: 1.1em;
+    font-size: 1em;
     background-color: transparent;
 }
 

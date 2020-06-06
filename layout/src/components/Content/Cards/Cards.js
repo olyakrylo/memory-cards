@@ -11,19 +11,13 @@ import Confirm from '../Confirm';
 export default class Cards extends React.Component {
     state = {
         cards: this.props.cards,
-        // type: 'q'
+        isCounterInput: false
     };
 
     componentDidMount() {
         let carousel = document.querySelector('.cards__list');
         carousel.addEventListener('touchstart', e => slide.call(this, e, carousel));
     }
-
-    // setType = (name) => {
-    //     this.setState({
-    //         type: name
-    //     });
-    // }
 
     deleteCard = (e, num) => {
         e.stopPropagation();
@@ -43,19 +37,37 @@ export default class Cards extends React.Component {
         let { cards } = this.props;
         for (let i in cards) {
             yield (
-                <Item question={cards[i].q} answer={cards[i].a} num={i} key={i}
-                      deleteCard={this.deleteCard} type={this.props.type} setType={this.props.setType} />
+                <Item question={cards[i].q} answer={cards[i].a} num={i} key={i} flip={this.flip}
+                      deleteCard={this.deleteCard} type={this.props.type} />
             )
         }
     }
 
+    flip = () => {
+        let list = document.querySelector('.cards__list');
+        list.classList.add('cards__list_hidden');
+
+        setTimeout(() => {  
+            let { type } = this.props;
+            this.props.setType(type === 'q' ? 'a' : 'q');
+            list.classList.remove('cards__list_hidden');
+        }, 300);
+    }
+
     move(direction) {
-        let { currCard, setCurrCard, cards } = this.props;
-        if (direction === 'left' && currCard !== 0) {
-            setCurrCard(currCard - 1);
-        } else if (direction === 'right' && currCard !== cards.length - 1) {
-            setCurrCard(currCard + 1);
+        let delay = 0;
+        if (this.props.type === 'a') {
+            this.flip();
+            delay = 300;
         }
+        setTimeout(() => {
+            let { currCard, setCurrCard, cards } = this.props;
+            if (direction === 'left' && currCard !== 0) {
+                setCurrCard(currCard - 1);
+            } else if (direction === 'right' && currCard !== cards.length - 1) {
+                setCurrCard(currCard + 1);
+            }
+        }, delay)
     }
 
     clear = () => {
@@ -75,8 +87,38 @@ export default class Cards extends React.Component {
         if (this.props.cards.length) return;
         return (
             <Item question={'Hello! Click to flip!'} answer={'Click again!'} num={-1}
-                  type={this.props.type} setType={this.props.setType} />
+                  type={this.props.type} flip={this.flip} />
         )
+    }
+
+    renderCounter = (len, curr) => {
+        let hasCards = !!this.props.cards.length;
+        if (this.state.isCounterInput && hasCards) {
+            return <input className='counter__input' onKeyUp={this.counterInput} autoFocus
+                          onBlur={() => this.setState({isCounterInput: false})}/>
+        } else {
+            let clickFunc = hasCards ? () => this.setState({isCounterInput: true}) : null;
+            return (
+                <span onClick={clickFunc}>
+                    {len ? curr + 1 : 0}
+                </span>
+            )
+        }
+    }
+
+    counterInput = e => {
+        let num = isNaN(Number(e.target.value)) ? null : (Number(e.target.value) || 1);
+        if (!num || num < 1 || num > this.props.cards.length) {
+            e.target.classList.add('counter__input_wrong');
+            return;
+        }
+        e.target.classList.remove('counter__input_wrong');
+        if (e.key === 'Enter') {
+            this.setState({
+                isCounterInput: false,
+            });
+            this.props.setCurrCard(num - 1);
+        }
     }
 
     render() {
@@ -93,8 +135,9 @@ export default class Cards extends React.Component {
                         {[...this.genCards()]}
                     </ul>
                 </div>
-                <p className='cards__counter'>
-                    {`${len ? curr + 1 : 0} / ${len}`}
+                <p className='cards__counter counter'>
+                    {this.renderCounter(len, curr)}
+                    {` / ${len}`}
                 </p>
                 <FontAwesomeIcon 
                     className={`cards__arrow arrow__right ${curr === len - 1 || !len ? 'cards__arrow_hidden' : ''}`}

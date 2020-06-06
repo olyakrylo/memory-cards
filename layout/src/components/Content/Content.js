@@ -4,6 +4,7 @@ import Cards from './Cards';
 import Menu from './Menu';
 import Burger from './Burger';
 import Confirm from './Confirm';
+// import Editing from './Editing';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRandom } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
@@ -168,6 +169,7 @@ export default class Content extends React.Component {
                 <button className='content__quit' onClick={this.quit}>Quit</button>
 
                 <Confirm addClass='quit__confirm'/>
+                {/* <Editing />      */}
             </div>
         )
     }
