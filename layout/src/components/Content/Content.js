@@ -137,6 +137,13 @@ export default class Content extends React.Component {
 
     showEditing = () => {
         if (!this.state.showEditing) return;
+        // let cardsInfo = JSON.parse(localStorage.getItem('cards'));
+        // let stateCards = this.state.cardsInfo[this.state.chosenTheme].cards;
+        // // let cards = 
+        // let initCards = cardsInfo[this.state.chosenTheme].cards;
+        // console.log(stateCards, initCards)
+        // let index = initCards.findIndex(x => x.q === stateCards.q && x.a === stateCards.a);
+        // console.log(index)
         return (
             <Editing theme={this.state.chosenTheme} 
                      currCard={this.state.currCard} 
@@ -171,7 +178,8 @@ export default class Content extends React.Component {
                        delCard={this.delCard}
                        type={this.state.type}
                        setType={this.setType}
-                       setEditing={this.setEditing} />
+                       setEditing={this.setEditing}
+                       areShuffled={!!this.state.shuffledThemes.length}  />
 
                 <FontAwesomeIcon icon={faRandom} onClick={this.shuffleTheme}
                                  className={`content__shuffle ${cardsLength > 1 ? '' : 'content__shuffle_hidden'}`} />

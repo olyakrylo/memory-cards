@@ -37,7 +37,7 @@ export default class Cards extends React.Component {
         let { cards } = this.props;
         for (let i in cards) {
             yield (
-                <Item question={cards[i].q} answer={cards[i].a} num={i} key={i} flip={this.flip}
+                <Item question={cards[i].q} answer={cards[i].a} num={i} key={i} flip={this.flip} areShuffled={this.props.areShuffled} 
                       deleteCard={this.deleteCard} type={this.props.type} setEditing={this.props.setEditing} />
             )
         }

@@ -23,8 +23,10 @@
     width: 75%;
     max-height: 80%;
     overflow: auto;
-    font-size: 20px;
+    font-size: 17px;
     color: var(--text-color);
+    /* text-align: justify;
+    text-justify:  */
 }
 
 .cards__item-text::-webkit-scrollbar { width: 0; }
@@ -72,7 +74,7 @@
     .cards__item-text {
         left: 40vw;
         top: 100px;
-        font-size: 15px;
+        font-size: 13px;
     }
     
     .cards__delete {
