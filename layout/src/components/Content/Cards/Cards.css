@@ -38,9 +38,11 @@
 
 .cards__arrow {
     position: absolute;
-    top: 160px;
+    /* top: 130px; */
+    top: calc(var(--item-height) / 2 + 10px);
     color: var(--darkgray);
     font-size: 30px;
+    line-height: 1.3em;
     cursor: pointer;
 }
 .cards__arrow_hidden {
