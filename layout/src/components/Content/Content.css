@@ -1,5 +1,11 @@
 .content {
-    width: 580px;
+    --content-width: 680px;
+    --cards-container-width: calc(var(--content-width) - 80px);
+    --item-width: calc(var(--cards-container-width) - 40px);
+}
+
+.content {
+    width: var(--content-width);
     margin: auto;
     font-family: 'Roboto';
     font-size: 27px;

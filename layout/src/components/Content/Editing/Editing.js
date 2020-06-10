@@ -34,11 +34,11 @@ export default class Editing extends React.Component {
                     </div>
                     <div className='editing__field field'>
                         <p className='field__title'>question</p>
-                        <textarea className='field__input' data-type='q' defaultValue={card.q}></textarea>
+                        <textarea className='field__input field__input_small' data-type='q' defaultValue={card.q}></textarea>
                     </div>
                     <div className='editing__field field'>
                         <p className='field__title'>answer</p>
-                        <textarea className='field__input' data-type='a' defaultValue={card.a}></textarea>
+                        <textarea className='field__input field__input_big' data-type='a' defaultValue={card.a}></textarea>
                     </div>
                     <button className='editing__save' onClick={this.save}>Save</button>
                     <FontAwesomeIcon icon={faTimes} className='editing__close'

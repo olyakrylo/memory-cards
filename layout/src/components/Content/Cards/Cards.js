@@ -117,7 +117,13 @@ export default class Cards extends React.Component {
             this.setState({
                 isCounterInput: false,
             });
-            this.props.setCurrCard(num - 1);
+            let delay = 0;
+            if (this.props.type === 'a') {
+                this.flip();
+                delay = 300;
+            }
+            setTimeout(() => this.props.setCurrCard(num - 1), delay);
+            // this.props.setCurrCard(num - 1);
         }
     }
 
@@ -125,7 +131,7 @@ export default class Cards extends React.Component {
         let curr = this.props.currCard;
         let len = this.props.cards.length;
         let clientWidth = document.documentElement.clientWidth;
-        let containerWidth = clientWidth > 500 ? 500 : clientWidth * 0.9;
+        let containerWidth = clientWidth > 500 ? 600 : clientWidth * 0.9;
         let mLeft = -containerWidth * curr + 'px';
         return (
             <div className='cards'>

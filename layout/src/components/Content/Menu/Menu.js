@@ -36,6 +36,7 @@ export default class Menu extends React.Component {
         }
         input.classList.toggle('menu__add-input_show');
         document.querySelector('.menu__add-icon').classList.remove('menu__add-icon_red');
+        input.focus();
     }
 
     addOnInput = e => {

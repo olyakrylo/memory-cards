@@ -115,7 +115,7 @@
 }
 
 .menu__add-input_show {
-    width: 200px;
+    width: 180px;
 }
 
 @media (max-width: 500px) {
@@ -144,6 +144,6 @@
     }
 
     .menu__add-input_show {
-        width: 150px;
+        width: 130px;
     }
 }

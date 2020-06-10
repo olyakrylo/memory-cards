@@ -1,11 +1,15 @@
 .cards {
+    --item-height: 350px;
+}
+
+.cards {
     position: relative;
     margin-top: 10px;
 }
 
 .cards__container {
-    width: 500px;
-    height: 350px;
+    width: var(--cards-container-width);
+    height: calc(var(--item-height) + 60px);
     margin: auto;
     overflow: hidden;
     position: relative;
@@ -16,7 +20,7 @@
     margin: 0;
     padding: 0;
     width: max-content;
-    height: 290px;
+    height: var(--item-height);
     margin-left: 0;
 
     position: absolute;

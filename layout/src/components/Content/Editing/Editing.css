@@ -57,7 +57,7 @@
 }
 
 .editing__field {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .field__title {
@@ -68,8 +68,7 @@
 }
 
 .field__input {
-    width: 400px;
-    height: 100px;
+    width: 500px;
     padding: 5px 10px;
     box-sizing: border-box;
     outline: none;
@@ -80,6 +79,14 @@
     font-size: .8em;
     color: var(--text-color);
     background-color: transparent;
+}
+
+.field__input_small {
+    height: 70px;
+}
+
+.field__input_big {
+    height: 140px;
 }
 
 .editing__save {

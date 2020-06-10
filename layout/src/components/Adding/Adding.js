@@ -68,12 +68,12 @@ export default class Adding extends React.Component {
                 <p className='adding__warning adding__warning_hidden'>No question or answer!</p>
                 <div className='adding__input input'>
                     <p className='input__title'>Add question</p>
-                    <textarea id='q-field' className='input__area'
+                    <textarea id='q-field' className='input__area input__area_small'
                               onInput={this.onInput}></textarea>
                 </div>
                 <div className='adding__input input'>
                     <p className='input__title'>Add answer</p>
-                    <textarea id='a-field' className='input__area'
+                    <textarea id='a-field' className='input__area input__area_big'
                               onInput={this.onInput}></textarea>
                 </div>
                 <button onClick={this.validate} className='adding__save'>Save</button>
