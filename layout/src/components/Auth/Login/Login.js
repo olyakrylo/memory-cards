@@ -40,7 +40,7 @@ export default class Login extends React.Component {
                 this.props.showAlert('User not found :(')
                 return;
             }
-            this.props.enter(user.name, user.id, info);
+            this.props.enter(user.name, user.id, info, password);
         })
     }
 

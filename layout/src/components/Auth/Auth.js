@@ -26,8 +26,8 @@ export default class Auth extends React.Component {
         }, 300);
     }
 
-    enter = (name, id, info) => {
-        this.props.setUsername(name, id);
+    enter = (name, id, info, password) => {
+        this.props.setUsername(name, id, password);
         localStorage.setItem('name', name);
         localStorage.setItem('id', id);
         localStorage.setItem('cards', JSON.stringify(info));

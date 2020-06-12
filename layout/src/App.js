@@ -16,21 +16,27 @@ import {
 
 class App extends React.Component {
     state = {
-        theme: 0,
+        theme: parseInt(localStorage.getItem('theme')) || 0,
+        currCard: parseInt(localStorage.getItem('currCard')) || 0,
         username: localStorage.getItem('name'),
-        id: localStorage.getItem('id')
+        id: localStorage.getItem('id'),
+        password: ''
     }
 
     setTheme = index => {
-        this.setState({
-            theme: index
-        });
+        this.setState({ theme: index });
     }
 
-    setUsername = (name, id) => {
+    setCurrCard = num => {
+        this.setState({ currCard: num });
+        localStorage.setItem('currCard', num);
+    }
+
+    setUsername = (name, id, password) => {
         this.setState({
             username: name,
-            id: id
+            id: id,
+            password: password
         });
     }
 
@@ -51,9 +57,13 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path='/' render={() => <Auth setUsername={this.setUsername} url={url} />} />
                     <Route exact path='/content' render={() => <Content setTheme={this.setTheme} theme={this.state.theme}
-                                                                        name={this.state.username} id={this.state.id} url={url}/>} />
+                                                                        name={this.state.username} id={this.state.id} 
+                                                                        url={url} setCurrCard={this.setCurrCard}
+                                                                        currCard={this.state.currCard}
+                                                                        password={this.state.password} />} />
                     <Route path='/add' render={() => <Adding theme={this.state.theme} name={this.state.username} 
-                                                             id={this.state.id} url={url}/>} />
+                                                             id={this.state.id} url={url}
+                                                             setCurrCard={this.setCurrCard} />} />
                 </Switch>
             </div>
         )

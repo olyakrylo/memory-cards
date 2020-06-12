@@ -59,27 +59,32 @@
     color: var(--darkgray);
     text-align: center;
     margin: 0;
-    font-size: 1em;
+    font-size: .9em;
+    height: 40px;
+    line-height: 40px;
+}
+
+.cards__counter span {
+    display: inline-block;
+    width: 40px;
 }
 
 .counter__input {
-    width: 60px;
-    padding: 2px 10px;
+    width: 40px;
+    height: 40px;
     outline: none;
     box-sizing: border-box;
     font: inherit;
     color: inherit;
     background-color: transparent;
-    border: 1px solid var(--darkgray);
-    border-radius: 10px;
+    border: none;
+    border-bottom: 1px solid var(--darkgray);
+    border-radius: 0;
     text-align: center;
 }
 
 .counter__input_wrong {
-    border-color: transparent;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
-    -moz-box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
-    box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5) inset;
+    border-bottom-color: lightcoral;
 }
 
 .cards__clear {
@@ -115,10 +120,12 @@
         font-size: 20px;
         text-align: center;
         margin: 0;
+        height: 30px;
     }
 
     .counter__input {
-        width: 45px;
+        height: 30px;
+        width: 40px;
     }
 
     .cards__clear {

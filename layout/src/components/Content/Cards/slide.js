@@ -1,8 +1,9 @@
 function slide(e, carousel) {
     if(carousel.children.length <= 1) return;
 
-    let transitionProps = getComputedStyle(carousel).transitionProperty;
-    carousel.style.transitionProperty = transitionProps.replace(/(margin-left,|, margin-left|margin-left)/, '');
+    // let transitionProps = getComputedStyle(carousel).transitionProperty;
+    // carousel.style.transitionProperty = transitionProps.slice().replace(/(margin-left,|, margin-left|margin-left)/, '');
+    carousel.style.transitionProperty = 'transform';
     
     let startX = e.changedTouches[0].clientX;
     let margin = Math.abs(parseFloat(getComputedStyle(carousel).marginLeft));
@@ -30,7 +31,7 @@ function slide(e, carousel) {
 
     let touchEnd = e => {
         let endX = e.changedTouches[0].clientX;
-        carousel.style.transitionProperty = transitionProps;
+        carousel.style.transitionProperty = 'margin-left, transform';
         if (diffX === 1 && startX > endX) {
             carousel.style.marginLeft = `-${checkPoints[currCard + 1] || max}px`;
             currCard = Math.min(currCard + 1, blocksAmount - 1);

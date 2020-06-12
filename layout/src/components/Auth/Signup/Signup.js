@@ -35,7 +35,7 @@ export default class Login extends React.Component {
         })
         .then(response => response.json())
         .then(user => {
-            this.props.enter(name, user.id, user.info);
+            this.props.enter(name, user.id, user.info, password);
         })
     }
 

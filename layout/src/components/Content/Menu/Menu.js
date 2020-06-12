@@ -8,6 +8,7 @@ export default class Menu extends React.Component {
         let index = Number(e.target.dataset.num);
         this.props.setTheme(index);
         this.props.setType('q');
+        localStorage.setItem('theme', index);
     }
 
     *genThemes() {

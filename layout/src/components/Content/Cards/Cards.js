@@ -95,7 +95,7 @@ export default class Cards extends React.Component {
         let hasCards = !!this.props.cards.length;
         if (this.state.isCounterInput && hasCards) {
             return <input className='counter__input' onKeyUp={this.counterInput} autoFocus
-                          onBlur={() => this.setState({isCounterInput: false})}/>
+                          onBlur={() => this.setState({isCounterInput: false})} maxLength='3' />
         } else {
             let clickFunc = hasCards ? () => this.setState({isCounterInput: true}) : null;
             return (
@@ -143,7 +143,7 @@ export default class Cards extends React.Component {
                 </div>
                 <p className='cards__counter counter'>
                     {this.renderCounter(len, curr)}
-                    {` / ${len}`}
+                    {' / '}<span>{len}</span>
                 </p>
                 <FontAwesomeIcon 
                     className={`cards__arrow arrow__right ${curr === len - 1 || !len ? 'cards__arrow_hidden' : ''}`}

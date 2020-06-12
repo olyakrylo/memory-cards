@@ -42,6 +42,7 @@ export default class Adding extends React.Component {
         })
         .then(user => {
             localStorage.setItem('cards', JSON.stringify(user.info));
+            this.props.setCurrCard(cardsInfo[theme].cards.length - 1);
             let href = window.location.href.match(/^.+\/#\//);
             window.location.assign(href[0] + 'content');
         })

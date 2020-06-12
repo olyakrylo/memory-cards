@@ -14,14 +14,41 @@ export default class Content extends React.Component {
         document.querySelector('.loading').classList.add('loading_hidden');
     }
 
+    // fetching() {
+    //     let { url, id, password } = this.props;
+    //     if (!password) return;
+    //     fetch(url + id, {
+    //         method: "POST",
+    //         headers:{
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ "password": password })
+    //     })
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    //     .then(info => {
+    //         // console.log(info);
+    //         this.setState({ cardsInfo: info });
+    //         localStorage.setItem('cards', info);
+    //     })
+    // }
+
+    // upd = setInterval(this.fetching.bind(this), 2000);
+
+    // componentWillUnmount() {
+    //     console.log(this.upd)
+    //     clearInterval(this.upd);
+    // }
+
     state = {
         isMenuOpen: false,
         chosenTheme: this.props.theme,
-        currCard: 0,
         cardsInfo: JSON.parse(localStorage.getItem('cards')),
         shuffledThemes: [],
         type: 'q',
-        showEditing: false
+        showEditing: false,
+        counter: 0
     }
 
     toggleMenu = () => {
@@ -39,14 +66,12 @@ export default class Content extends React.Component {
     setTheme = num => {
         this.setState({
             chosenTheme: num,
-            currCard: 0
         })
+        this.setCurrCard(0);
     }
 
     setCurrCard = num => {
-        this.setState({
-            currCard: num
-        })
+        this.props.setCurrCard(num);
     }
 
     updateCards = (cards, theme, curr) => {
@@ -70,8 +95,8 @@ export default class Content extends React.Component {
             this.setState({
                 cardsInfo: user.info,
                 chosenTheme: theme,
-                currCard: curr
             });
+            this.setCurrCard(curr);
             localStorage.setItem('cards', JSON.stringify(user.info));
         })
     }
@@ -82,12 +107,12 @@ export default class Content extends React.Component {
             theme: name,
             cards: []
         });
-        this.updateCards(cardsInfo, this.state.chosenTheme, this.state.currCard);
+        this.updateCards(cardsInfo, this.state.chosenTheme, this.props.currCard);
     }
 
     delTheme = () => {
         let newCards = this.state.cardsInfo.filter((el, i) => i !== this.state.chosenTheme);
-        this.updateCards(newCards, 0, this.state.currCard);
+        this.updateCards(newCards, 0, this.props.currCard);
     }
 
     shuffleTheme = (e) => {
@@ -108,13 +133,14 @@ export default class Content extends React.Component {
         e.currentTarget.classList.toggle('content__shuffle_on');
         this.setState({
             cardsInfo: cardsInfo,
-            currCard: 0,
             shuffledThemes: shuffledThemes
         });
+        this.setCurrCard(0);
     }
 
     delCard = (num, all) => {
-        let { cardsInfo, chosenTheme, currCard } = this.state;
+        let { cardsInfo, chosenTheme } = this.state;
+        let { currCard } = this.props;
         cardsInfo[chosenTheme].cards = all ? [] : cardsInfo[chosenTheme].cards.filter((el, i) => i !== Number(num));
         let newCurr = currCard && !all ? currCard - 1 : 0;
         this.updateCards(cardsInfo, this.state.chosenTheme, newCurr);
@@ -137,16 +163,9 @@ export default class Content extends React.Component {
 
     showEditing = () => {
         if (!this.state.showEditing) return;
-        // let cardsInfo = JSON.parse(localStorage.getItem('cards'));
-        // let stateCards = this.state.cardsInfo[this.state.chosenTheme].cards;
-        // // let cards = 
-        // let initCards = cardsInfo[this.state.chosenTheme].cards;
-        // console.log(stateCards, initCards)
-        // let index = initCards.findIndex(x => x.q === stateCards.q && x.a === stateCards.a);
-        // console.log(index)
         return (
             <Editing theme={this.state.chosenTheme} 
-                     currCard={this.state.currCard} 
+                     currCard={this.props.currCard}
                      cardsInfo={this.state.cardsInfo}
                      updateCards={this.updateCards}
                      setEditing={this.setEditing} />
@@ -159,6 +178,15 @@ export default class Content extends React.Component {
         });
     }
 
+    renderAdding = (cardsLength) => {
+        if (cardsLength > 999) return null;
+        else return (
+            <div className='content__control' onClick={() => this.props.setTheme(this.state.chosenTheme)}>
+                <Link to='/add' className='content__add'>+</Link>
+            </div>
+        )
+    }
+
     render() {
         if (!this.props.name) {
             let href = window.location.href.match(/^.+\/#\//);
@@ -168,12 +196,10 @@ export default class Content extends React.Component {
         let cardsLength = this.state.cardsInfo[this.state.chosenTheme].cards.length;
         return (
             <div className='content'>
-                <div className='content__control' onClick={() => this.props.setTheme(this.state.chosenTheme)}>
-                    <Link to='/add' className='content__add'>+</Link>
-                </div>
+                {this.renderAdding(cardsLength)}
 
                 <Cards cards={this.state.cardsInfo[this.state.chosenTheme].cards}
-                       currCard={this.state.currCard}
+                       currCard={this.props.currCard}
                        setCurrCard={this.setCurrCard}
                        delCard={this.delCard}
                        type={this.state.type}
