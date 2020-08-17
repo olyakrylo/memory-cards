@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4);
     animation: fade-in .3s ease-out;
 }
 
@@ -23,15 +23,25 @@
     to { transform: rotate(360deg); }
 }
 
-.loading__bar {
+.loading__container {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
 
+.loading__title {
+    font-family: 'Roboto';
+    font-size: 17px;
+    font-weight: 300;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.loading__bar {
     width: 100px;
     height: 100px;
-    margin-left: -50px;
-    margin-top: -50px;
 
     animation-name: rotation;
     animation-duration: 1s;

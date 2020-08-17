@@ -14,33 +14,6 @@ export default class Content extends React.Component {
         document.querySelector('.loading').classList.add('loading_hidden');
     }
 
-    // fetching() {
-    //     let { url, id, password } = this.props;
-    //     if (!password) return;
-    //     fetch(url + id, {
-    //         method: "POST",
-    //         headers:{
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ "password": password })
-    //     })
-    //     .then(response => {
-    //         return response.json()
-    //     })
-    //     .then(info => {
-    //         // console.log(info);
-    //         this.setState({ cardsInfo: info });
-    //         localStorage.setItem('cards', info);
-    //     })
-    // }
-
-    // upd = setInterval(this.fetching.bind(this), 2000);
-
-    // componentWillUnmount() {
-    //     console.log(this.upd)
-    //     clearInterval(this.upd);
-    // }
-
     state = {
         isMenuOpen: false,
         chosenTheme: this.props.theme,
